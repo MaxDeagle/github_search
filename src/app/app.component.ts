@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'app';
+
+  repositories: Repository[] = [];
+  public updateRepositories(repositories: Repository[]) {
+    this.repositories = [...repositories];
+  }
 }
