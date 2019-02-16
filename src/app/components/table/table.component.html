@@ -1,5 +1,4 @@
-<div class="table">
-  <mat-accordion>
+ <mat-accordion class="table">
     <mat-expansion-panel *ngFor="let repo of repositories" (afterExpand)="loadBranches(repo)">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -18,4 +17,3 @@
       </div>
     </mat-expansion-panel>
   </mat-accordion>
-</div>
