@@ -1,3 +1,4 @@
+import { Repository } from './../../models/repository';
 import { GithubService } from './../../services/github.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -17,7 +18,7 @@ export class SearchComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private githubService: GithubService
-    ) {
+  ) {
     this.searchForm = this.fb.group({
       letters: [null]
     });
@@ -25,6 +26,10 @@ export class SearchComponent implements OnInit {
     this.searchForm.controls.letters.valueChanges.pipe(
       debounceTime(300)
     ).subscribe((value) => {
+      if (!value) {
+        this.searchEvent.emit([]);
+        return;
+      }
       this.githubService.search(value).subscribe((repositories: Repository[]) => {
         this.searchEvent.emit(repositories);
       });

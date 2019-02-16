@@ -1,3 +1,4 @@
+import { Repository, Branch } from './../models/repository';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
@@ -19,5 +20,9 @@ export class GithubService {
         return response.items;
       }
     ));
+  }
+
+  public loadBranches(url: string): Observable<Branch[]> {
+    return this.apiService.get(url);
   }
 }

@@ -1,0 +1,12 @@
+.table {
+    &__row-avatar {
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+        border-radius: 3px;
+    }
+
+    &__row-name {
+        padding-top: 5px;
+    }
+}

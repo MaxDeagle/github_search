@@ -1,3 +1,4 @@
+import { Repository } from './models/repository';
 import { Component } from '@angular/core';
 
 @Component({

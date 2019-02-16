@@ -1,14 +1,21 @@
 <div class="table">
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let repo of repositories">
+    <mat-expansion-panel *ngFor="let repo of repositories" (afterExpand)="loadBranches(repo)">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{ repo.name }}
+          <img class="table__row-avatar" [src]="repo.owner.avatar_url">
+          <span class="table__row-name">{{ repo.name }}</span>
         </mat-panel-title>
         <mat-panel-description>
           {{ repo.description }}
         </mat-panel-description>
       </mat-expansion-panel-header>
+
+      <mat-progress-bar *ngIf="!repo.branchesLoaded" mode="indeterminate"></mat-progress-bar>
+      <div *ngIf="repo.branchesLoaded">
+        <h3>Branches</h3>
+        <p *ngFor="let branch of repo.branches">{{ branch.name }}</p>
+      </div>
     </mat-expansion-panel>
   </mat-accordion>
 </div>
