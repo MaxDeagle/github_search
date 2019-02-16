@@ -1,27 +1,21 @@
-import { Branch, Repository } from './../../models/repository';
-import { GithubService } from './../../services/github.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Repository } from './../../models/repository';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit {
+export class TableComponent {
 
   @Input('repositories')
   public repositories: Repository[] = [];
-  constructor(private githubService: GithubService) { }
 
-  ngOnInit() {
-  }
+  @Output('loadBranchesEvent')
+  private loadBranchesEvent = new EventEmitter<Repository>();
 
   public loadBranches(repo: Repository) {
-    const url = repo.branches_url.split('{')[0];
-    this.githubService.loadBranches(url).subscribe((branches: Branch[]) => {
-      repo.branches = branches;
-      repo.branchesLoaded = true;
-    });
+    this.loadBranchesEvent.emit(repo);
   }
 
 }

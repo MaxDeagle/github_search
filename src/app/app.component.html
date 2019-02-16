@@ -1,4 +1,4 @@
 <div class="container">
-  <app-search (searchEvent)="updateRepositories($event)"></app-search>
-  <app-table [repositories]="repositories"></app-table>
+  <app-search (searchEvent)="loadRepositories($event)"></app-search>
+  <app-table (loadBranchesEvent)="loadBranches($event)" [repositories]="repositories"></app-table>
 </div>

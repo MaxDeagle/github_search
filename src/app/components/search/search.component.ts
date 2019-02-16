@@ -1,6 +1,4 @@
-import { Repository } from './../../models/repository';
-import { GithubService } from './../../services/github.service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 
@@ -9,16 +7,13 @@ import { debounceTime } from 'rxjs/operators';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent {
 
   @Output('searchEvent')
-  private searchEvent = new EventEmitter<Repository[]>();
+  private searchEvent = new EventEmitter<string>();
   searchForm: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private githubService: GithubService
-  ) {
+  constructor(private fb: FormBuilder) {
     this.searchForm = this.fb.group({
       letters: [null]
     });
@@ -26,17 +21,8 @@ export class SearchComponent implements OnInit {
     this.searchForm.controls.letters.valueChanges.pipe(
       debounceTime(300)
     ).subscribe((value) => {
-      if (!value) {
-        this.searchEvent.emit([]);
-        return;
-      }
-      this.githubService.search(value).subscribe((repositories: Repository[]) => {
-        this.searchEvent.emit(repositories);
-      });
+      this.searchEvent.emit(value);
     });
-  }
-
-  ngOnInit() {
   }
 
 }
